@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import uploadFile from '../helpers/uploadFile';
 import axios from 'axios'
 import toast from 'react-hot-toast';
-import { PiUserCircle } from "react-icons/pi";
 import Avatar from '../components/Avatar';
 import { useDispatch } from 'react-redux';
 import { setToken, setUser } from '../redux/userSlice';
@@ -16,6 +15,7 @@ const CheckPasswordPage = () => {
   })
   const navigate = useNavigate()
   const location = useLocation()
+  // console.log('location',location.state)
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -25,6 +25,7 @@ const CheckPasswordPage = () => {
   },[])
 
   const handleOnChange = (e)=>{
+    // console.log('e',e)
     const { name, value} = e.target
 
     setData((preve)=>{
@@ -55,8 +56,8 @@ const CheckPasswordPage = () => {
         toast.success(response.data.message)
 
         if(response.data.success){
+          // console.log('response data',response)
             dispatch(setToken(response?.data?.token))
-            localStorage.setItem('token',response?.data?.token)
 
             setData({
               password : "",
@@ -87,7 +88,7 @@ const CheckPasswordPage = () => {
             </div>
 
           <form className='grid gap-4 mt-3' onSubmit={handleSubmit}>
-              
+
 
           <div className='flex flex-col gap-1'>
                 <label htmlFor='password'>Password :</label>
@@ -95,7 +96,7 @@ const CheckPasswordPage = () => {
                   type='password'
                   id='password'
                   name='password'
-                  placeholder='enter your password' 
+                  placeholder='enter your password'
                   className='bg-slate-100 px-2 py-1 focus:outline-primary'
                   value={data.password}
                   onChange={handleOnChange}

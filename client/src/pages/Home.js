@@ -2,18 +2,18 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { logout, setOnlineUser, setSocketConnection, setUser } from '../redux/userSlice'
+import { logout, setOnlineUser, setUser } from '../redux/userSlice'
 import Sidebar from '../components/Sidebar'
 import logo from '../assets/logo.png'
-import io from 'socket.io-client'
+import { socketConnection } from '../socket/socket'
 
 const Home = () => {
   const user = useSelector(state => state.user)
+  // console.log("user data from redux",user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
-  console.log('user',user)
   const fetchUserDetails = async()=>{
     try {
         const URL = `${process.env.REACT_APP_BACKEND_URL}/api/user-details`
@@ -22,13 +22,14 @@ const Home = () => {
           withCredentials : true
         })
 
+        // console.log('current user details', response)
         dispatch(setUser(response.data.data))
 
         if(response.data.data.logout){
             dispatch(logout())
             navigate("/email")
         }
-        console.log("current user Details",response)
+        // console.log("current user Details",response)
     } catch (error) {
         console.log("error",error)
     }
@@ -39,26 +40,22 @@ const Home = () => {
   },[])
 
   /***socket connection */
-  useEffect(()=>{
-    const socketConnection = io(process.env.REACT_APP_BACKEND_URL,{
-      auth : {
-        token : localStorage.getItem('token')
-      },
-    })
+  useEffect(() => {
+    socketConnection.connect();
+     socketConnection.on("connect", () => {
+       console.log("✅ socket connected", socketConnection.id);
+     });
+    socketConnection.on("onlineUser", (data) => {
+      console.log("online users", data);
+      dispatch(setOnlineUser(data));
+    });
+     return () => {
+       socketConnection.off("onlineUser"); // 👉 CLEAN ONLY EVENT
+       // ❌ DON'T DISCONNECT HERE
+     };
+  }, []);
 
-    socketConnection.on('onlineUser',(data)=>{
-      console.log(data)
-      dispatch(setOnlineUser(data))
-    })
-
-    dispatch(setSocketConnection(socketConnection))
-
-    return ()=>{
-      socketConnection.disconnect()
-    }
-  },[])
-
-
+  // console.log("location", location)
   const basePath = location.pathname === '/'
   return (
     <div className='grid lg:grid-cols-[300px,1fr] h-screen max-h-screen'>
@@ -72,7 +69,7 @@ const Home = () => {
         </section>
 
 
-        <div className={`justify-center items-center flex-col gap-2 hidden ${!basePath ? "hidden" : "lg:flex" }`}>
+        <div className={`justify-center items-center flex-col hidden ${!basePath ? "hidden" : "lg:flex" }`}>
             <div>
               <img
                 src={logo}
@@ -80,7 +77,7 @@ const Home = () => {
                 alt='logo'
               />
             </div>
-            <p className='text-lg mt-2 text-slate-500'>Select user to send message</p>
+            <p className='text-lg -mt-8 text-slate-500'>Select user to send message</p>
         </div>
     </div>
   )

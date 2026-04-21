@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoClose } from "react-icons/io5";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import uploadFile from '../helpers/uploadFile';
-import axios from 'axios'
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const RegisterPage = () => {
   const [data,setData] = useState({
@@ -28,8 +28,10 @@ const RegisterPage = () => {
 
   const handleUploadPhoto = async(e)=>{
     const file = e.target.files[0]
+    // console.log('file', e)
 
     const uploadPhoto = await uploadFile(file)
+    // console.log("uploadPhoto",uploadPhoto)
 
     setUploadPhoto(file)
 
@@ -49,31 +51,29 @@ const RegisterPage = () => {
   const handleSubmit = async(e)=>{
     e.preventDefault()
     e.stopPropagation()
+    // console.log('data',data)
 
     const URL = `${process.env.REACT_APP_BACKEND_URL}/api/register`
 
     try {
         const response = await axios.post(URL,data)
-        console.log("response",response)
+        console.log("response", response)
 
         toast.success(response.data.message)
 
         if(response.data.success){
-            setData({
-              name : "",
-              email : "",
-              password : "",
-              profile_pic : ""
-            })
-
-            navigate('/email')
+            setData({})
+            navigate('/email', {state : response?.data?.data})
 
         }
     } catch (error) {
+        console.log('error in register',error)
         toast.error(error?.response?.data?.message)
     }
-    console.log('data',data)
+    // console.log('data',data)
   }
+
+
 
 
   return (
@@ -88,7 +88,7 @@ const RegisterPage = () => {
                   type='text'
                   id='name'
                   name='name'
-                  placeholder='enter your name' 
+                  placeholder='enter your name'
                   className='bg-slate-100 px-2 py-1 focus:outline-primary'
                   value={data.name}
                   onChange={handleOnChange}
@@ -102,7 +102,7 @@ const RegisterPage = () => {
                   type='email'
                   id='email'
                   name='email'
-                  placeholder='enter your email' 
+                  placeholder='enter your email'
                   className='bg-slate-100 px-2 py-1 focus:outline-primary'
                   value={data.email}
                   onChange={handleOnChange}
@@ -116,7 +116,7 @@ const RegisterPage = () => {
                   type='password'
                   id='password'
                   name='password'
-                  placeholder='enter your password' 
+                  placeholder='enter your password'
                   className='bg-slate-100 px-2 py-1 focus:outline-primary'
                   value={data.password}
                   onChange={handleOnChange}
@@ -140,11 +140,11 @@ const RegisterPage = () => {
                           </button>
                         )
                       }
-                      
+
                   </div>
-                
+
                 </label>
-                
+
                 <input
                   type='file'
                   id='profile_pic'

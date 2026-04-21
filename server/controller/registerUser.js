@@ -9,7 +9,7 @@ async function registerUser(request,response){
 
         if(checkEmail){
             return response.status(400).json({
-                message : "Already user exits",
+                message : "Already user exits with this email",
                 error : true,
             })
         }
@@ -29,7 +29,7 @@ async function registerUser(request,response){
         const userSave = await user.save()
 
         return response.status(201).json({
-            message : "User created successfully",
+            message : "User created successfully, Now Verify the email",
             data : userSave,
             success : true
         })

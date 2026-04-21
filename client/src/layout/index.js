@@ -5,11 +5,11 @@ const AuthLayouts = ({children}) => {
   return (
     <>
         <header className='flex justify-center items-center py-3 h-20 shadow-md bg-white'>
-            <img 
+            <img
               src={logo}
               alt='logo'
-              width={180}
-              height={60}
+              width={200}
+              height={90}
             />
         </header>
 

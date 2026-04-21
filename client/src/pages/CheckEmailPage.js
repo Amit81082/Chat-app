@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { IoClose } from "react-icons/io5";
 import { Link, useNavigate } from 'react-router-dom';
-import uploadFile from '../helpers/uploadFile';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import { PiUserCircle } from "react-icons/pi";
@@ -61,7 +59,7 @@ const CheckEmailPage = () => {
           <h3>Welcome to Chat app!</h3>
 
           <form className='grid gap-4 mt-3' onSubmit={handleSubmit}>
-              
+
 
               <div className='flex flex-col gap-1'>
                 <label htmlFor='email'>Email :</label>
@@ -69,7 +67,7 @@ const CheckEmailPage = () => {
                   type='email'
                   id='email'
                   name='email'
-                  placeholder='enter your email' 
+                  placeholder='enter your email'
                   className='bg-slate-100 px-2 py-1 focus:outline-primary'
                   value={data.email}
                   onChange={handleOnChange}

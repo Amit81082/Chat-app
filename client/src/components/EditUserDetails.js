@@ -9,9 +9,10 @@ import { setUser } from '../redux/userSlice'
 
 
 const EditUserDetails = ({onClose,user}) => {
+    // console.log("user in EditUserdetails",user)
     const [data,setData] = useState({
-        
-        name : user?.name,  //user?.user, 
+
+        name : user?.name,  //user?.user,
         profile_pic : user?.profile_pic
     })
     const uploadPhotoRef = useRef()
@@ -49,6 +50,7 @@ const EditUserDetails = ({onClose,user}) => {
         const file = e.target.files[0]
 
         const uploadPhoto = await uploadFile(file)
+        // console.log("uploadPhoto",uploadPhoto)
 
         setData((preve)=>{
         return{
@@ -71,17 +73,17 @@ const EditUserDetails = ({onClose,user}) => {
                 withCredentials : true
             })
 
-            console.log('response',response)
+            // console.log('response',response)
             taost.success(response?.data?.message)
-            
+
             if(response.data.success){
                 dispatch(setUser(response.data.data))
                 onClose()
             }
-         
+
         } catch (error) {
             console.log(error)
-            taost.error()
+            taost.error(error?.response?.data?.message || error?.message || error)
         }
     }
   return (
@@ -99,21 +101,21 @@ const EditUserDetails = ({onClose,user}) => {
                         id='name'
                         value={data.name}
                         onChange={handleOnChange}
-                        className='w-full py-1 px-2 focus:outline-primary border-0.5'
+                        className='w-full py-1 px-2 focus:outline-primary border border-slate-300 rounded'
                     />
                 </div>
 
                 <div>
-                    <div>Photo:</div>
-                    <div className='my-1 flex items-center gap-4'>
+                  <div>Photo:</div>
+                    <div className='my-1 flex items-center  gap-4'>
                         <Avatar
                             width={40}
                             height={40}
                             imageUrl={data?.profile_pic}
                             name={data?.name}
-                        />
+                            />
                         <label htmlFor='profile_pic'>
-                        <button className='font-semibold' onClick={handleOpenUploadPhoto}>Change Photo</button>
+                        <button className='font-semibold hover:text-primary' onClick={handleOpenUploadPhoto}>Change Photo</button>
                         <input
                             type='file'
                             id='profile_pic'
@@ -125,7 +127,7 @@ const EditUserDetails = ({onClose,user}) => {
                     </div>
                 </div>
 
-                <Divider/>    
+                <Divider/>
                 <div className='flex gap-2 w-fit ml-auto '>
                     <button onClick={onClose} className='border-primary border text-primary px-4 py-1 rounded hover:bg-primary hover:text-white'>Cancel</button>
                     <button onClick={handleSubmit} className='border-primary bg-primary text-white border px-4 py-1 rounded hover:bg-secondary'>Save</button>
