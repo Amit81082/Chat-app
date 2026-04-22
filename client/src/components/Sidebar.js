@@ -15,7 +15,7 @@ import { socketConnection } from "../socket/socket";
 
 const Sidebar = () => {
   const user = useSelector((state) => state?.user);
-  console.log('logged in user',user)
+  console.log("logged in user", user);
   const [editUserOpen, setEditUserOpen] = useState(false);
   const [allUserConv, setallUserConv] = useState([]);
   const [openSearchUser, setOpenSearchUser] = useState(false);
@@ -23,7 +23,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  if (!socketConnection || !user?._id) return;
+    if (!socketConnection || !user?._id) return;
 
     const sendSidebar = () => {
       socketConnection.emit("sidebar", user?._id);
@@ -35,51 +35,41 @@ const Sidebar = () => {
       socketConnection.once("connect", sendSidebar);
     }
 
-  const handler = (data) => {
+    const handler = (data) => {
+      const map = new Map();
+      data.forEach((c) => map.set(c._id.toString(), c));
+      const uniqueData = Array.from(map.values());
 
-    const map = new Map();
-    data.forEach((c) => map.set(c._id.toString(), c));
-    const uniqueData = Array.from(map.values());
+      const result = uniqueData.map((conversation) => {
+        if (conversation?.sender?._id === conversation?.receiver?._id) {
+          return { ...conversation, userDetails: conversation.sender };
+        } else if (conversation?.receiver?._id !== user?._id) {
+          return { ...conversation, userDetails: conversation.receiver };
+        } else {
+          return { ...conversation, userDetails: conversation.sender };
+        }
+      });
 
-    const result = uniqueData.map((conversation) => {
-      if (conversation?.sender?._id === conversation?.receiver?._id) {
-        return { ...conversation, userDetails: conversation.sender };
-      }
-      else if (conversation?.receiver?._id !== user?._id) {
-        return { ...conversation, userDetails: conversation.receiver };
-      }
-      else {
-        return { ...conversation, userDetails: conversation.sender };
-      }
-    });
+      setallUserConv(result);
+    };
 
-    // console.log("Sidebar result", result);
+    socketConnection.on("conversation", handler);
 
-     const filtered = result.filter(
-       (conv) => !conv?.lastMsg?.deletedFor?.includes(user?._id),
-     );
-
-    setallUserConv(filtered);
-  };
-
- socketConnection.on("conversation", handler);
-
-  return () => {
-    socketConnection.off("conversation", handler); // 🔥 MUST
-  };
-
-}, [ user?._id]);
+    return () => {
+      socketConnection.off("conversation", handler); // 🔥 MUST
+    };
+  }, [user?._id]);
 
   const handleLogout = async () => {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/logout`, {
+      method: "POST",
+      credentials: "include", // IMPORTANT
+    });
+    socketConnection.disconnect();
+    dispatch(logout());
+    navigate("/email");
+  };
 
-  await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/logout`, {
-    method: "POST",
-    credentials: "include"  // IMPORTANT
-  });
-  socketConnection.disconnect();
-  dispatch(logout());
-  navigate("/email");
-};
   return (
     <div className="w-full h-full grid grid-cols-[48px,1fr] bg-white">
       <div className="bg-slate-100 w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-start gap-96">
@@ -148,6 +138,7 @@ const Sidebar = () => {
           )}
 
           {allUserConv.map((conv, index) => {
+            const isDeleted = conv?.lastMsg?.deletedFor?.includes(user?._id);
             return (
               <NavLink
                 to={`/${conv?.userDetails?._id}`}
@@ -169,7 +160,7 @@ const Sidebar = () => {
                   </h3>
                   <div className="text-slate-500 text-xs flex items-center gap-1">
                     <div className="flex items-center gap-1">
-                      {conv?.lastMsg?.imageUrl && (
+                      {!isDeleted && conv?.lastMsg?.imageUrl && (
                         <div className="flex items-center gap-1">
                           <span>
                             <FaImage />
@@ -177,7 +168,7 @@ const Sidebar = () => {
                           {!conv?.lastMsg?.text && <span>Image</span>}
                         </div>
                       )}
-                      {conv?.lastMsg?.videoUrl && (
+                      {!isDeleted && conv?.lastMsg?.videoUrl && (
                         <div className="flex items-center gap-1">
                           <span>
                             <FaVideo />
@@ -187,7 +178,7 @@ const Sidebar = () => {
                       )}
                     </div>
                     <p className="text-ellipsis line-clamp-1">
-                      {conv?.lastMsg?.text}
+                      {!isDeleted && conv?.lastMsg?.text}
                     </p>
                   </div>
                 </div>

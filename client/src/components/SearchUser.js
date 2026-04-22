@@ -74,7 +74,7 @@ const SearchUser = ({onClose}) => {
       </div>
 
       <div
-        className="absolute top-0 right-0 text-2xl p-2 lg:text-4xl hover:text-red-600"
+        className="absolute top-0 right-0 text-2xl p-2 lg:text-4xl hover:text-red-600  "
         onClick={onClose}
       >
         <button>

@@ -210,7 +210,7 @@ io.on("connection", async (socket) => {
 
         if (!conversation) return;
 
-        const conversationMessageId = conversation.messages || [];
+        const conversationMessageId = conversation?.messages || [];
 
         await MessageModel.updateMany(
           { _id: { $in: conversationMessageId }, msgByUserId: receiver },
@@ -259,7 +259,12 @@ io.on("connection", async (socket) => {
         },
       );
 
+        const UpdateSidebar = await getConversation(
+          userId.toString(),
+        );
+
       io.to(userId.toString()).emit("message", convo?.messages || []);
+      io.to(userId.toString()).emit("conversation", UpdateSidebar);
     });
 
     //disconnect
