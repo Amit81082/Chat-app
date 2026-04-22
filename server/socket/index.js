@@ -259,7 +259,7 @@ io.on("connection", async (socket) => {
         },
       );
 
-      io.to(userId.toString()).emit("message", convo.messages || []);
+      io.to(userId.toString()).emit("message", convo?.messages || []);
     });
 
     //disconnect

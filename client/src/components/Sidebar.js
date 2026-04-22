@@ -53,7 +53,13 @@ const Sidebar = () => {
       }
     });
 
-    setallUserConv(result);
+    // console.log("Sidebar result", result);
+
+     const filtered = result.filter(
+       (conv) => !conv?.lastMsg?.deletedFor?.includes(user?._id),
+     );
+
+    setallUserConv(filtered);
   };
 
  socketConnection.on("conversation", handler);

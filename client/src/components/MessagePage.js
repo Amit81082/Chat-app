@@ -207,7 +207,7 @@ const MessagePage = () => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
       className="bg-no-repeat bg-cover"
     >
-      <header className="sticky top-0 h-16 bg-white flex justify-between items-center px-4 z-10 ">
+      <header className="sticky top-0 h-16 bg-white flex justify-between items-center px-4 ">
         <div className="flex items-center gap-4">
           <Link to={"/"} className="lg:hidden">
             <FaAngleLeft size={25} />
@@ -253,7 +253,7 @@ const MessagePage = () => {
       {/***show all message */}
       <section className="h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50">
         {/**all message show here */}
-        <div className="flex flex-col gap-2 py-2 mx-2" ref={currentMessage}>
+        <div className="flex flex-col gap-2 py-2 mx-2 bottom-16" ref={currentMessage}>
           {socketMessage.map((msg, index) => {
             return (
               <div
