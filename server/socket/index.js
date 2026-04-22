@@ -54,7 +54,7 @@ io.on("connection", async (socket) => {
 
     socket.on("message-page", async (userId) => {
       // console.log("message page", userId);
-      activeChat.set(user._id.toString(), userId);
+      activeChat.set(user?._id.toString(), userId);
       try {
         // ❌ INVALID ID STOP
         if (!isValidId(userId)) return;
