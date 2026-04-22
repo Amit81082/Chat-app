@@ -39,7 +39,8 @@ const MessagePage = () => {
   });
   const [loading, setLoading] = useState(false);
   const [socketMessage, setsocketMessage] = useState([]);
-  const currentMessage = useRef(null);
+  // const currentMessage = useRef(null);
+  const chatContainer = useRef(null);
   const menuRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -56,10 +57,10 @@ const MessagePage = () => {
   }, []);
 
   useEffect(() => {
-    if (currentMessage.current) {
-      currentMessage.current.scrollIntoView({
+    if (chatContainer.current) {
+      chatContainer.current.scrollTo({
+        top: chatContainer.current.scrollHeight - 80, // 👈 OFFSET
         behavior: "smooth",
-        block: "end",
       });
     }
   }, [socketMessage]);
@@ -251,10 +252,14 @@ const MessagePage = () => {
       </header>
 
       {/***show all message */}
-      <section className="h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50 ">
+      <section
+        ref={chatContainer}
+        className="h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50 "
+      >
         {/**all message show here */}
-        <div className="flex flex-col gap-2 py-2 mx-2 bottom-16" ref={currentMessage}>
+        <div className="flex flex-col gap-2 py-2 mx-2">
           {socketMessage.map((msg, index) => {
+            const isLast = index === socketMessage.length - 1;
             return (
               <div
                 key={msg?._id}
