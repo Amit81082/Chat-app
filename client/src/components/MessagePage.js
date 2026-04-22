@@ -74,13 +74,14 @@ const MessagePage = () => {
 
     setLoading(true);
     const uploadPhoto = await uploadFile(file);
+    console.log("uploadPhoto", uploadPhoto);
     setLoading(false);
     setOpenImageVideoUpload(false);
 
     setMessage((preve) => {
       return {
         ...preve,
-        imageUrl: uploadPhoto.url,
+        imageUrl: uploadPhoto?.secure_url,
       };
     });
   };
@@ -104,7 +105,7 @@ const MessagePage = () => {
     setMessage((preve) => {
       return {
         ...preve,
-        videoUrl: uploadPhoto.url,
+        videoUrl: uploadPhoto?.secure_url,
       };
     });
   };

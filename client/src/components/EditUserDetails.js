@@ -53,10 +53,10 @@ const EditUserDetails = ({onClose,user}) => {
         // console.log("uploadPhoto",uploadPhoto)
 
         setData((preve)=>{
-        return{
-            ...preve,
-            profile_pic : uploadPhoto?.url
-        }
+        return {
+          ...preve,
+          profile_pic: uploadPhoto?.secure_url,
+        };
         })
     }
 

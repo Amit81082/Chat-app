@@ -36,10 +36,10 @@ const RegisterPage = () => {
     setUploadPhoto(file)
 
     setData((preve)=>{
-      return{
+      return {
         ...preve,
-        profile_pic : uploadPhoto?.url
-      }
+        profile_pic: uploadPhoto?.secure_url,
+      };
     })
   }
   const handleClearUploadPhoto = (e)=>{
