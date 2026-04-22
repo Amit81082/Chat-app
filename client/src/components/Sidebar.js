@@ -32,7 +32,7 @@ const Sidebar = () => {
     if (socketConnection.connected) {
       sendSidebar();
     } else {
-      socketConnection.once("connect", sendSidebar); 
+      socketConnection.once("connect", sendSidebar);
     }
 
   const handler = (data) => {
@@ -76,7 +76,7 @@ const Sidebar = () => {
 };
   return (
     <div className="w-full h-full grid grid-cols-[48px,1fr] bg-white">
-      <div className="bg-slate-100 w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between">
+      <div className="bg-slate-100 w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-start gap-96">
         <div>
           <NavLink
             to="/"
@@ -97,7 +97,7 @@ const Sidebar = () => {
           </div>
         </div>
 
-          <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center">
           <button
             className="mx-auto"
             title={user?.name}
