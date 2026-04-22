@@ -41,7 +41,7 @@ const randomColor = useMemo(
   // console.log("isOnline", isOnline);
   return (
     <div
-      className={`text-slate-800  rounded-full font-bold relative`}
+      className={`text-slate-800  rounded-full font-bold relative overflow-hidden`}
       style={{ width: width + "px", height: height + "px" }}
     >
       {imageUrl ? (
@@ -50,7 +50,7 @@ const randomColor = useMemo(
           width={width}
           height={height}
           alt={name}
-          className="overflow-hidden rounded-full"
+          className="w-full h-full object-cover"
         />
       ) : name ? (
         <div
