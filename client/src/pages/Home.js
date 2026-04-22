@@ -58,16 +58,13 @@ const Home = () => {
   // console.log("location", location)
   const basePath = location.pathname === '/'
   return (
-    <div
-      className="grid lg:grid-cols-[300px,1fr]"
-      style={{ height: "var(--app-height)" }}
-    >
-      <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
+    <div className="grid lg:grid-cols-[300px,1fr] h-full">
+      <section className={`bg-white ${!basePath && "hidden"} lg:block h-full`}>
         <Sidebar />
       </section>
 
       {/**message component**/}
-      <section className={`${basePath && "hidden"}`}>
+      <section className={`${basePath && "hidden"} h-full`}>
         <Outlet />
       </section>
 

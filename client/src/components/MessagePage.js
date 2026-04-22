@@ -205,9 +205,9 @@ const MessagePage = () => {
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="bg-no-repeat bg-cover"
+      className="bg-no-repeat bg-cover flex flex-col h-full"
     >
-      <header className="sticky top-0 h-16 bg-white flex justify-between items-center px-4 ">
+      <header className="sticky top-0 h-16 bg-white flex flex-shrink-0 justify-between items-center px-4 ">
         <div className="flex items-center gap-4">
           <Link to={"/"} className="lg:hidden">
             <FaAngleLeft size={25} />
@@ -251,7 +251,7 @@ const MessagePage = () => {
       </header>
 
       {/***show all message */}
-      <section className="h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50">
+      <section className="h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50 ">
         {/**all message show here */}
         <div className="flex flex-col gap-2 py-2 mx-2" ref={currentMessage}>
           {socketMessage.map((msg, index) => {
@@ -334,7 +334,7 @@ const MessagePage = () => {
       </section>
 
       {/**send message */}
-      <section className="h-16 bg-white flex items-center px-4">
+      <section className="h-16 bg-white flex flex-shrink-0 items-center px-4 sticky bottom-0">
         <div className="relative ">
           <button
             onClick={handleUploadImageVideoOpen}
