@@ -207,7 +207,7 @@ const MessagePage = () => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
       className="bg-no-repeat bg-cover flex flex-col h-full"
     >
-      <header className="sticky top-0 h-16 bg-white flex flex-shrink-0 justify-between items-center px-4 ">
+      <header className="sticky top-0 h-16 bg-white flex flex-shrink-0 justify-between items-center px-4 z-10 ">
         <div className="flex items-center gap-4">
           <Link to={"/"} className="lg:hidden">
             <FaAngleLeft size={25} />
@@ -334,7 +334,7 @@ const MessagePage = () => {
       </section>
 
       {/**send message */}
-      <section className="h-16 bg-white flex flex-shrink-0 items-center px-4 sticky bottom-0">
+      <section className="h-16 bg-white flex flex-shrink-0 items-center px-4">
         <div className="relative ">
           <button
             onClick={handleUploadImageVideoOpen}
