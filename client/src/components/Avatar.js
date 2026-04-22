@@ -64,7 +64,9 @@ const randomColor = useMemo(
       )}
 
       {isOnline && (
-        <div className="bg-green-500 p-1 absolute bottom-2 -right-1 z-10 rounded-full"></div>
+        <div className=" absolute top-[2.4px]  left-[5.4px]  z-100">
+          <div className=" w-2.5 h-2.5  bg-green-500  rounded-full  border-2  border-white"></div>
+        </div>
       )}
     </div>
   );

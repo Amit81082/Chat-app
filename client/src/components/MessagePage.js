@@ -264,13 +264,13 @@ const MessagePage = () => {
                   {msg?.imageUrl && (
                     <img
                       src={msg?.imageUrl}
-                      className="w-full h-full object-scale-down"
+                      className="w-full h-full object-cover"
                     />
                   )}
                   {msg?.videoUrl && (
                     <video
                       src={msg.videoUrl}
-                      className="w-full h-full object-scale-down"
+                      className="w-full h-full object-cover"
                       controls
                     />
                   )}

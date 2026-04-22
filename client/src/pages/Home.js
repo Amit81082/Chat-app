@@ -58,29 +58,31 @@ const Home = () => {
   // console.log("location", location)
   const basePath = location.pathname === '/'
   return (
-    <div className='grid lg:grid-cols-[300px,1fr] h-screen max-h-screen'>
-        <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
-           <Sidebar/>
-        </section>
+    <div
+      className="grid lg:grid-cols-[300px,1fr]"
+      style={{ height: "var(--app-height)" }}
+    >
+      <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
+        <Sidebar />
+      </section>
 
-        {/**message component**/}
-        <section className={`${basePath && "hidden"}`} >
-            <Outlet/>
-        </section>
+      {/**message component**/}
+      <section className={`${basePath && "hidden"}`}>
+        <Outlet />
+      </section>
 
-
-        <div className={`justify-center items-center flex-col hidden ${!basePath ? "hidden" : "lg:flex" }`}>
-            <div>
-              <img
-                src={logo}
-                width={250}
-                alt='logo'
-              />
-            </div>
-            <p className='text-lg -mt-8 text-slate-500'>Select user to send message</p>
+      <div
+        className={`justify-center items-center flex-col hidden ${!basePath ? "hidden" : "lg:flex"}`}
+      >
+        <div>
+          <img src={logo} width={250} alt="logo" />
         </div>
+        <p className="text-lg -mt-8 text-slate-500">
+          Select user to send message
+        </p>
+      </div>
     </div>
-  )
+  );
 }
 
 export default Home
