@@ -10,7 +10,7 @@ function App() {
 
  useEffect(() => {
    function setAppHeight() {
-     const offset = 60;
+     const offset = 120;
 
      document.documentElement.style.setProperty(
        "--app-height",
