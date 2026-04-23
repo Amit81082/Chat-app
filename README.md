@@ -9,6 +9,15 @@ USER → LOGIN → CONNECT SOCKET → SELECT USER → SEND MESSAGE → REAL-TIME
 ## 🚀 👉 **LIVE PROJECT**
 
  https://chat-app-nu-seven-97.vercel.app/
+ 
+## 🚀 👉 **ScreenShots**
+
+<img width="1363" height="646" alt="image" src="https://github.com/user-attachments/assets/154c3a25-88cf-4b3c-bbf8-1eba1e60896b" />
+<img width="1365" height="638" alt="image" src="https://github.com/user-attachments/assets/6dbe4770-60b1-4824-b424-afdd1501e6e0" />
+<img width="1366" height="646" alt="image" src="https://github.com/user-attachments/assets/e49bcecf-8f8a-4242-a6e6-91a8d10242d9" />
+
+
+
 
 ---
 
