@@ -8,7 +8,7 @@ USER → LOGIN → CONNECT SOCKET → SELECT USER → SEND MESSAGE → REAL-TIME
 
 ## 🚀 👉 **LIVE PROJECT**
 
-🔗 https://chat-app-nu-seven-97.vercel.app/
+ https://chat-app-nu-seven-97.vercel.app/
 
 ---
 
