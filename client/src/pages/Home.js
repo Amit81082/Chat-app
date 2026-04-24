@@ -24,6 +24,7 @@ const Home = () => {
           withCredentials : true
         })
 
+
         // console.log('current user details', response)
         dispatch(setUser(response.data.data))
 
@@ -88,7 +89,10 @@ const Home = () => {
       </div>
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
-          <div className="animate-spin h-10 w-10 border-4 border-white border-t-transparent rounded-full"></div>
+          <div className="flex flex-col items-center">
+            <div className="animate-spin h-10 w-10 border-4 border-white border-t-transparent rounded-full"></div>
+            <p className="text-white mt-4 font-medium">Please wait 20-30 seconds...</p>
+          </div>
         </div>
       )}
     </div>
