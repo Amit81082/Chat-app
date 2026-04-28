@@ -58,6 +58,7 @@ const CheckPasswordPage = () => {
         if(response.data.success){
           // console.log('response data',response)
             dispatch(setToken(response?.data?.token))
+            dispatch(setUser(response?.data?.data));
 
             setData({
               password : "",

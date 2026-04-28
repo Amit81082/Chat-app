@@ -1,6 +1,7 @@
 const UserModel = require("../models/UserModel");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const getUserDetailsFromToken = require("../helpers/getUserDetailsFromToken");
 
 async function checkPassword(request, response) {
   try {
@@ -35,6 +36,7 @@ async function checkPassword(request, response) {
     return response.cookie("token", token, cookieOptions).status(200).json({
       message: "Login successfully",
       token: token,
+      data: user,
       success: true,
     });
   } catch (error) {
