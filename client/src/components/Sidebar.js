@@ -23,7 +23,8 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!socketConnection || !user?._id) return;
+    if (!socketConnection) return;
+    if (!user?._id) return;
 
     const sendSidebar = () => {
       socketConnection.emit("sidebar", user?._id);
@@ -67,6 +68,8 @@ const Sidebar = () => {
     });
     socketConnection.disconnect();
     dispatch(logout());
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/email");
   };
 

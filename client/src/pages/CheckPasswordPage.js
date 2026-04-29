@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import Avatar from '../components/Avatar';
 import { useDispatch } from 'react-redux';
 import { setToken, setUser } from '../redux/userSlice';
+import { socketConnection } from '../socket/socket';
 
 const CheckPasswordPage = () => {
   const [data,setData] = useState({
@@ -57,8 +58,13 @@ const CheckPasswordPage = () => {
 
         if(response.data.success){
           // console.log('response data',response)
-            dispatch(setToken(response?.data?.token))
-            dispatch(setUser(response?.data?.data));
+          const userData = response?.data?.data;
+          const token = response?.data?.token;
+            dispatch(setToken(token));
+            dispatch(setUser(userData));
+
+             localStorage.setItem("user", JSON.stringify(userData));
+             localStorage.setItem("token", token);
 
             setData({
               password : "",

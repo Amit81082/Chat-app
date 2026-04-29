@@ -15,6 +15,17 @@ const Home = () => {
   const location = useLocation()
   const [loading,setLoading] = useState(false)
 
+
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
+
+    if (localUser) {
+      const parsedUser = JSON.parse(localUser);
+      dispatch(setUser(parsedUser)); // 👉 instant load
+      socketConnection.emit("sidebar", parsedUser?._id);
+    }
+  }, []);
+
   const fetchUserDetails = async()=>{
     try {
         setLoading(true);
@@ -26,10 +37,14 @@ const Home = () => {
 
 
         // console.log('current user details', response)
-        dispatch(setUser(response.data.data))
+         const userData = response?.data?.data;
+         dispatch(setUser(userData));
+         localStorage.setItem("user", JSON.stringify(userData));
 
         if(response.data.data.logout){
             dispatch(logout())
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
             navigate("/email")
         }
         // console.log("current user Details",response)
@@ -40,11 +55,13 @@ const Home = () => {
     }
   }
 
-  useEffect(()=>{
-    if(!user._id){
-      fetchUserDetails()
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
+
+    if (!localUser) {
+      fetchUserDetails(); // 👉 only if NOT in localStorage
     }
-  },[])
+  }, []);
 
 
 
